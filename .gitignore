@@ -396,3 +396,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# dev config
+appsettings.Development.json
+# db file
+*.db
+*.db-shm
+*.db-wal

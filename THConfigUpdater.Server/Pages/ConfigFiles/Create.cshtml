@@ -1,0 +1,68 @@
+﻿@page
+@model THConfigUpdater.Server.Pages.ConfigFiles.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ConfigFile</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.FileName" class="control-label"></label>
+                <input asp-for="ConfigFile.FileName" class="form-control" />
+                <span asp-validation-for="ConfigFile.FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.Description" class="control-label"></label>
+                <input asp-for="ConfigFile.Description" class="form-control" />
+                <span asp-validation-for="ConfigFile.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.Length" class="control-label"></label>
+                <input asp-for="ConfigFile.Length" class="form-control" />
+                <span asp-validation-for="ConfigFile.Length" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.Sha256" class="control-label"></label>
+                <input asp-for="ConfigFile.Sha256" class="form-control" />
+                <span asp-validation-for="ConfigFile.Sha256" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.ClientPath" class="control-label"></label>
+                <input asp-for="ConfigFile.ClientPath" class="form-control" />
+                <span asp-validation-for="ConfigFile.ClientPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.ServerPath" class="control-label"></label>
+                <input asp-for="ConfigFile.ServerPath" class="form-control" />
+                <span asp-validation-for="ConfigFile.ServerPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.ServerUrl" class="control-label"></label>
+                <input asp-for="ConfigFile.ServerUrl" class="form-control" />
+                <span asp-validation-for="ConfigFile.ServerUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigFile.FileBasedConfigId" class="control-label"></label>
+                <select asp-for="ConfigFile.FileBasedConfigId" class ="form-control" asp-items="ViewBag.FileBasedConfigId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

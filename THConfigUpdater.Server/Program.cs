@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using THConfigUpdater.Server.Data;
 namespace THConfigUpdater.Server
 {
     public class Program
@@ -5,11 +8,16 @@ namespace THConfigUpdater.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<THCUSDbContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("THCUSDbContext") ?? throw new InvalidOperationException("Connection string 'THCUSDbContext' not found.")));
 
             // Add services to the container.
             builder.Services.AddRazorPages();
 
             var app = builder.Build();
+
+            // apply db migration
+            app.Services.GetRequiredService<THCUSDbContext>().Database.Migrate();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
