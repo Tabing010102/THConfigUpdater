@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using THConfigUpdater.Server.Configs;
 using THConfigUpdater.Server.Data;
 using THConfigUpdater.Server.Models;
 
@@ -15,10 +16,12 @@ namespace THConfigUpdater.Server.Controllers
     public class ConfigFilesController : ControllerBase
     {
         private readonly THCUSDbContext _context;
+        private readonly FSConfig _fsConfig;
 
-        public ConfigFilesController(THCUSDbContext context)
+        public ConfigFilesController(THCUSDbContext context, FSConfig fsConfig)
         {
             _context = context;
+            _fsConfig = fsConfig;
         }
 
         // GET: api/ConfigFiles
@@ -40,6 +43,36 @@ namespace THConfigUpdater.Server.Controllers
             }
 
             return configFile;
+        }
+
+        [HttpGet("getFile/{id}")]
+        public async Task<IActionResult> GetConfigFileContent(int id)
+        {
+            var configFile = await _context.ConfigFiles.SingleOrDefaultAsync(c => c.Id == id);
+            if (configFile == null)
+            {
+                return NotFound();
+            }
+            if (configFile.ServerPath == null && configFile.ServerUrl == null)
+            {
+                return Problem("Both ServerPath and ServerUrl are null.", statusCode: StatusCodes.Status500InternalServerError);
+            }
+            else if (configFile.ServerUrl != null)
+            {
+                return Redirect(configFile.ServerUrl);
+            }
+            else
+            {
+                // check if file exists
+                var filePath = Path.Combine(_fsConfig.ConfigFilesBasePath, configFile.Id.ToString(), configFile.ServerPath!);
+                var exists = System.IO.File.Exists(filePath);
+                if (!exists)
+                {
+                    return Problem("File not found on server.", statusCode: StatusCodes.Status500InternalServerError);
+                }
+                // return file content
+                return PhysicalFile(filePath, "application/octet-stream", enableRangeProcessing: true);
+            }
         }
 
         // PUT: api/ConfigFiles/5

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using THConfigUpdater.Server.Configs;
 using THConfigUpdater.Server.Data;
 namespace THConfigUpdater.Server
 {
@@ -11,6 +12,9 @@ namespace THConfigUpdater.Server
 
             builder.Services.AddDbContext<THCUSDbContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("THCUSDbContext") ?? throw new InvalidOperationException("Connection string 'THCUSDbContext' not found.")));
+
+            // Read config
+            builder.Services.AddSingleton(builder.Configuration.GetSection("FSConfig").Get<FSConfig>() ?? throw new InvalidOperationException("FSConfig not found."));
 
             // Add services to the container.
             builder.Services.AddRazorPages();

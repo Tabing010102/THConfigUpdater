@@ -42,6 +42,17 @@ namespace THConfigUpdater.Server.Controllers
             return fileBasedConfig;
         }
 
+        [HttpGet("getConfigFiles/{id}")]
+        public async Task<ActionResult<IEnumerable<ConfigFile>>> GetConfigFiles(int id)
+        {
+            var fileBasedConfig = await _context.FileBasedConfigs.SingleOrDefaultAsync(f => f.Id == id);
+            if (fileBasedConfig == null)
+            {
+                return NotFound();
+            }
+            return await _context.ConfigFiles.Where(c => c.FileBasedConfigId == id).ToListAsync();
+        }
+
         // PUT: api/FileBasedConfigs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
