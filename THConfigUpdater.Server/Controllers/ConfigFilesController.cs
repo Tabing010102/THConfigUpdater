@@ -64,7 +64,15 @@ namespace THConfigUpdater.Server.Controllers
             else
             {
                 // check if file exists
-                var filePath = Path.Combine(_fsConfig.ConfigFilesBasePath, configFile.Id.ToString(), configFile.ServerPath!);
+                string filePath;
+                if (Path.IsPathRooted(configFile.ServerPath))
+                {
+                    filePath = configFile.ServerPath!;
+                }
+                else
+                {
+                    filePath = Path.Combine(_fsConfig.ConfigFilesBasePath, configFile.ServerPath!);
+                }
                 var exists = System.IO.File.Exists(filePath);
                 if (!exists)
                 {
