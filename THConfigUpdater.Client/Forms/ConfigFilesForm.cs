@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using THConfigUpdater.Client.Core.FileBased;
 using THConfigUpdater.Client.Core.FileBased.Models;
+using THConfigUpdater.Client.Helpers;
 
 namespace THConfigUpdater.Client.Forms
 {
@@ -43,7 +44,7 @@ namespace THConfigUpdater.Client.Forms
                         ListViewItem item = new ListViewItem(string.Empty);
                         item.SubItems.Add(c.Id.ToString());
                         item.SubItems.Add(c.ClientPath);
-                        item.SubItems.Add(c.Length.ToString());
+                        item.SubItems.Add(SizeBytesToHRStringHelper.SizeBytesToHRString(c.Length));
                         item.SubItems.Add(c.Sha256);
                         item.SubItems.Add(c.Description);
                         configFilesListView.Items.Add(item);

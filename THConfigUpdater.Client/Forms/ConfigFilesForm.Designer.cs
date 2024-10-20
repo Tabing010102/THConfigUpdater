@@ -98,6 +98,7 @@
             // chLength
             // 
             this.chLength.Text = "文件大小";
+            this.chLength.Width = 80;
             // 
             // chSha256
             // 
