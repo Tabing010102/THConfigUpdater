@@ -119,6 +119,12 @@ namespace THConfigUpdater.Client.Forms
                         var configFileId = int.Parse(item.SubItems[1].Text);
                         var clientPath = item.SubItems[2].Text;
                         var serverStream = await _fileBasedConfigService.GetConfigFileContentAsync(configFileId);
+                        // ensure directory exists
+                        var directory = Path.GetDirectoryName(clientPath);
+                        if (!Directory.Exists(directory))
+                        {
+                            Directory.CreateDirectory(directory);
+                        }
                         using (var fileStream = File.OpenWrite(clientPath))
                         {
                             await serverStream.CopyToAsync(fileStream);
