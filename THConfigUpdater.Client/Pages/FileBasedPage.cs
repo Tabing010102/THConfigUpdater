@@ -16,6 +16,8 @@ namespace THConfigUpdater.Client.Pages
     {
         private FileBasedConfigService _fileBasedConfigService;
 
+        private bool _isRefreshing = false;
+
         public FileBasedPage(FileBasedConfigService fileBasedConfigService)
         {
             _fileBasedConfigService = fileBasedConfigService;
@@ -23,29 +25,60 @@ namespace THConfigUpdater.Client.Pages
             InitializeComponent();
         }
 
-        private async void tsRefreshBtn_ClickAsync(object sender, EventArgs e)
+        private async Task RefreshFileBasedConfigs()
         {
-            try
+            if (!_isRefreshing)
             {
-                var configs = await _fileBasedConfigService.GetFileBasedConfigsAsync();
-                configsListView.Items.Clear();
-                configsListView.BeginUpdate();
-                configs.ForEach(c =>
+                try
                 {
-                    ListViewItem item = new ListViewItem(c.Id.ToString());
-                    item.SubItems.Add(c.Name);
-                    item.SubItems.Add(c.Description);
-                    configsListView.Items.Add(item);
-                });
-                configsListView.EndUpdate();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    configsListView.Items.Clear();
+                    configsListView.Items.Add(new ListViewItem("正在刷新..."));
+                    var configs = await _fileBasedConfigService.GetFileBasedConfigsAsync();
+                    configsListView.Items.Clear();
+                    configsListView.BeginUpdate();
+                    configs.ForEach(c =>
+                    {
+                        ListViewItem item = new ListViewItem(c.Id.ToString());
+                        item.SubItems.Add(c.Name);
+                        item.SubItems.Add(c.Description);
+                        configsListView.Items.Add(item);
+                    });
+                    configsListView.EndUpdate();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    _isRefreshing = false;
+                }
             }
         }
 
+        private async void tsRefreshBtn_ClickAsync(object sender, EventArgs e)
+        {
+            await RefreshFileBasedConfigs();
+        }
+
         private void configsListView_DoubleClick(object sender, EventArgs e)
+        {
+            if (configsListView.SelectedItems.Count == 1)
+            {
+                ConfigFilesForm configFilesForm = new ConfigFilesForm(_fileBasedConfigService)
+                {
+                    FileBasedConfigId = int.Parse(configsListView.SelectedItems[0].Text)
+                };
+                configFilesForm.ShowDialog(this);
+            }
+        }
+
+        private async void FileBasedPage_Load(object sender, EventArgs e)
+        {
+            await RefreshFileBasedConfigs();
+        }
+
+        private void tsUpdateConfigBtn_Click(object sender, EventArgs e)
         {
             if (configsListView.SelectedItems.Count == 1)
             {

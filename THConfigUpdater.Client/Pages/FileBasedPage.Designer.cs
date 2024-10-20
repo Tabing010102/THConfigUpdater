@@ -66,6 +66,7 @@
             this.tsUpdateConfigBtn.Name = "tsUpdateConfigBtn";
             this.tsUpdateConfigBtn.Size = new System.Drawing.Size(76, 22);
             this.tsUpdateConfigBtn.Text = "更新配置";
+            this.tsUpdateConfigBtn.Click += new System.EventHandler(this.tsUpdateConfigBtn_Click);
             // 
             // configsListView
             // 
@@ -77,6 +78,7 @@
             this.configsListView.FullRowSelect = true;
             this.configsListView.HideSelection = false;
             this.configsListView.Location = new System.Drawing.Point(0, 25);
+            this.configsListView.MultiSelect = false;
             this.configsListView.Name = "configsListView";
             this.configsListView.Size = new System.Drawing.Size(800, 425);
             this.configsListView.TabIndex = 1;
@@ -108,6 +110,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FileBasedPage";
             this.Text = "FileBasedPage";
+            this.Load += new System.EventHandler(this.FileBasedPage_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

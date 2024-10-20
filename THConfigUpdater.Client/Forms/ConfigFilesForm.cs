@@ -50,6 +50,7 @@ namespace THConfigUpdater.Client.Forms
                     });
                     configFilesListView.EndUpdate();
 
+                    bool needUpdate = false;
                     foreach (ListViewItem item in configFilesListView.Items)
                     {
                         var clientPath = item.SubItems[2].Text;
@@ -58,6 +59,7 @@ namespace THConfigUpdater.Client.Forms
                         {
                             item.Text = "缺失";
                             item.BackColor = Color.LightCoral;
+                            needUpdate = true;
                         }
                         else
                         {
@@ -70,6 +72,7 @@ namespace THConfigUpdater.Client.Forms
                                 {
                                     item.Text = "不匹配";
                                     item.BackColor = Color.LightYellow;
+                                    needUpdate = true;
                                 }
                                 else
                                 {
@@ -80,8 +83,16 @@ namespace THConfigUpdater.Client.Forms
                         }
                     }
 
-                    operationBtn.Text = "更新";
-                    operationBtn.Enabled = true;
+                    if (needUpdate)
+                    {
+                        operationBtn.Text = "更新";
+                        operationBtn.Enabled = true;
+                    }
+                    else
+                    {
+                        operationBtn.Text = "无需更新";
+                        operationBtn.Enabled = false;
+                    }
                 }
                 catch (Exception ex)
                 {
