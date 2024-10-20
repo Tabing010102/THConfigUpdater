@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace THConfigUpdater.Server.Models
 {
@@ -17,6 +18,7 @@ namespace THConfigUpdater.Server.Models
         // one-to-many relation
         public int FileBasedConfigId { get; set; }
         [ValidateNever]
+        [JsonIgnore]
         public FileBasedConfig FileBasedConfig { get; set; } = null!;
     }
 }
