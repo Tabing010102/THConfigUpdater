@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THConfigUpdater.Server", "THConfigUpdater.Server\THConfigUpdater.Server.csproj", "{4BB71009-7C79-4A47-8FEE-8CBA68C78CBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "THConfigUpdater.Server", "THConfigUpdater.Server\THConfigUpdater.Server.csproj", "{4BB71009-7C79-4A47-8FEE-8CBA68C78CBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THConfigUpdater.Client", "THConfigUpdater.Client\THConfigUpdater.Client.csproj", "{05520256-7EE3-4B03-8EED-2C50B7383711}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9481D41E-661E-415B-985D-F6A031FBD6EE} = {9481D41E-661E-415B-985D-F6A031FBD6EE}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "THConfigUpdater.Client.Core", "THConfigUpdater.Client.Core\THConfigUpdater.Client.Core.csproj", "{9481D41E-661E-415B-985D-F6A031FBD6EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{05520256-7EE3-4B03-8EED-2C50B7383711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05520256-7EE3-4B03-8EED-2C50B7383711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05520256-7EE3-4B03-8EED-2C50B7383711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9481D41E-661E-415B-985D-F6A031FBD6EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9481D41E-661E-415B-985D-F6A031FBD6EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9481D41E-661E-415B-985D-F6A031FBD6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9481D41E-661E-415B-985D-F6A031FBD6EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

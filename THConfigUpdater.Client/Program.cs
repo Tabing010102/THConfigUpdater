@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using THConfigUpdater.Client.Configs;
+using THConfigUpdater.Client.Core.FileBased;
 
 namespace THConfigUpdater.Client
 {
@@ -16,7 +20,17 @@ namespace THConfigUpdater.Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
+        //private static IHostBuilder CreateHostBuilder()
+        //{
+        //    return Host.CreateDefaultBuilder()
+        //        .ConfigureServices((context, services) =>
+        //        {
+        //            services.AddSingleton<FileBasedConfigService>(new FileBasedConfigService(GlobalConfig.ServerBaseUrl));
+
+        //            services.AddScoped<MainForm>();
+        //        });
+        //}
     }
 }
