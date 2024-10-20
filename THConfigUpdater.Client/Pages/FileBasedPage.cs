@@ -32,7 +32,9 @@ namespace THConfigUpdater.Client.Pages
                 try
                 {
                     configsListView.Items.Clear();
-                    configsListView.Items.Add(new ListViewItem("正在刷新..."));
+                    var rItem = new ListViewItem(string.Empty);
+                    rItem.SubItems.Add("正在刷新...");
+                    configsListView.Items.Add(rItem);
                     var configs = await _fileBasedConfigService.GetFileBasedConfigsAsync();
                     configsListView.Items.Clear();
                     configsListView.BeginUpdate();
