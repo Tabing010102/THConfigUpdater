@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using THConfigUpdater.Client.Configs;
 using THConfigUpdater.Client.Core.FileBased;
+using THConfigUpdater.Client.Forms;
 using THConfigUpdater.Client.Pages;
 
 namespace THConfigUpdater.Client
@@ -29,6 +30,12 @@ namespace THConfigUpdater.Client
             fileBasedPage.Dock = DockStyle.Fill;
             mainPanel.Controls.Add(fileBasedPage);
             fileBasedPage.Show();
+        }
+
+        private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settingsForm = new SettingsForm();
+            settingsForm.ShowDialog(this);
         }
     }
 }

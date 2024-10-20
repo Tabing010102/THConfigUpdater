@@ -52,6 +52,7 @@
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
             this.设置ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.设置ToolStripMenuItem.Text = "设置";
+            this.设置ToolStripMenuItem.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
             // 功能ToolStripMenuItem
             // 
@@ -64,7 +65,7 @@
             // 基于文件的配置ToolStripMenuItem
             // 
             this.基于文件的配置ToolStripMenuItem.Name = "基于文件的配置ToolStripMenuItem";
-            this.基于文件的配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.基于文件的配置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.基于文件的配置ToolStripMenuItem.Text = "基于文件的配置";
             // 
             // mainPanel
