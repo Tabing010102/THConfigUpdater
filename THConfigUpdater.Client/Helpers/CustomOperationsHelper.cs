@@ -14,7 +14,11 @@ namespace THConfigUpdater.Client.Helpers
 
         public CustomOperationsHelper(string customOperations)
         {
-            _ops = JsonSerializer.Deserialize<CustomOperations>(customOperations);
+            _ops = JsonSerializer.Deserialize<CustomOperations>(customOperations, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
         }
 
         public bool PerformBeforeOperations()
