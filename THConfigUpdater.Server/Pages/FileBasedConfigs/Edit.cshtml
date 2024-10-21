@@ -10,7 +10,7 @@
 <h4>FileBasedConfig</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="FileBasedConfig.Id" />
@@ -23,6 +23,11 @@
                 <label asp-for="FileBasedConfig.Description" class="control-label"></label>
                 <input asp-for="FileBasedConfig.Description" class="form-control" />
                 <span asp-validation-for="FileBasedConfig.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileBasedConfig.CustomOperations" class="control-label"></label>
+                <textarea asp-for="FileBasedConfig.CustomOperations" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="FileBasedConfig.CustomOperations" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
