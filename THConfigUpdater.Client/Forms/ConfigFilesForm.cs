@@ -21,7 +21,7 @@ namespace THConfigUpdater.Client.Forms
 
         private List<ConfigFile> _configFiles;
 
-        public int FileBasedConfigId { get; set; }
+        public FileBasedConfig FileBasedConfig { get; set; }
 
         public ConfigFilesForm(FileBasedConfigService fileBasedConfigService)
         {
@@ -32,11 +32,11 @@ namespace THConfigUpdater.Client.Forms
 
         private async void ConfigFilesForm_Load(object sender, EventArgs e)
         {
-            if (FileBasedConfigId >= 0)
+            if (FileBasedConfig != null && FileBasedConfig.Id >= 0)
             {
                 try
                 {
-                    _configFiles = await _fileBasedConfigService.GetConfigFilesAsync(FileBasedConfigId);
+                    _configFiles = await _fileBasedConfigService.GetConfigFilesAsync(FileBasedConfig.Id);
                     configFilesListView.Items.Clear();
                     configFilesListView.BeginUpdate();
                     _configFiles.ForEach(c =>
@@ -114,6 +114,12 @@ namespace THConfigUpdater.Client.Forms
             {
                 try
                 {
+                    operationBtn.Text = "更新中";
+                    operationBtn.Enabled = false;
+                    CustomOperationsHelper customOperationsHelper = new CustomOperationsHelper(FileBasedConfig.CustomOperations);
+                    // before
+                    customOperationsHelper.PerformBeforeOperations();
+                    // update files
                     foreach (ListViewItem item in configFilesListView.Items)
                     {
                         var configFileId = int.Parse(item.SubItems[1].Text);
@@ -132,6 +138,8 @@ namespace THConfigUpdater.Client.Forms
                         item.Text = "更新完成";
                         item.BackColor = Color.LightGreen;
                     }
+                    // after
+                    customOperationsHelper.PerformAfterOperations();
                     MessageBox.Show("更新成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)

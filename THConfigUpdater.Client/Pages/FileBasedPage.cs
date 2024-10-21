@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using THConfigUpdater.Client.Core.FileBased;
+using THConfigUpdater.Client.Core.FileBased.Models;
 using THConfigUpdater.Client.Forms;
 
 namespace THConfigUpdater.Client.Pages
@@ -17,6 +18,7 @@ namespace THConfigUpdater.Client.Pages
         private FileBasedConfigService _fileBasedConfigService;
 
         private bool _isRefreshing = false;
+        private List<FileBasedConfig> _fileBasedConfigs;
 
         public FileBasedPage(FileBasedConfigService fileBasedConfigService)
         {
@@ -35,10 +37,11 @@ namespace THConfigUpdater.Client.Pages
                     var rItem = new ListViewItem(string.Empty);
                     rItem.SubItems.Add("正在刷新...");
                     configsListView.Items.Add(rItem);
-                    var configs = await _fileBasedConfigService.GetFileBasedConfigsAsync();
+                    _fileBasedConfigs.Clear();
+                    _fileBasedConfigs = await _fileBasedConfigService.GetFileBasedConfigsAsync();
                     configsListView.Items.Clear();
                     configsListView.BeginUpdate();
-                    configs.ForEach(c =>
+                    _fileBasedConfigs.ForEach(c =>
                     {
                         ListViewItem item = new ListViewItem(c.Id.ToString());
                         item.SubItems.Add(c.Name);
@@ -69,7 +72,7 @@ namespace THConfigUpdater.Client.Pages
             {
                 ConfigFilesForm configFilesForm = new ConfigFilesForm(_fileBasedConfigService)
                 {
-                    FileBasedConfigId = int.Parse(configsListView.SelectedItems[0].Text)
+                    FileBasedConfig = _fileBasedConfigs.Single(x => x.Id == int.Parse(configsListView.SelectedItems[0].Text))
                 };
                 configFilesForm.ShowDialog(this);
             }
@@ -86,7 +89,7 @@ namespace THConfigUpdater.Client.Pages
             {
                 ConfigFilesForm configFilesForm = new ConfigFilesForm(_fileBasedConfigService)
                 {
-                    FileBasedConfigId = int.Parse(configsListView.SelectedItems[0].Text)
+                    FileBasedConfig = _fileBasedConfigs.Single(x => x.Id == int.Parse(configsListView.SelectedItems[0].Text))
                 };
                 configFilesForm.ShowDialog(this);
             }
