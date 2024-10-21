@@ -93,7 +93,7 @@
             // chClientPath
             // 
             this.chClientPath.Text = "路径";
-            this.chClientPath.Width = 150;
+            this.chClientPath.Width = 210;
             // 
             // chLength
             // 
@@ -141,7 +141,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ConfigFilesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ConfigFilesForm";
+            this.Text = "更新配置文件";
             this.Load += new System.EventHandler(this.ConfigFilesForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

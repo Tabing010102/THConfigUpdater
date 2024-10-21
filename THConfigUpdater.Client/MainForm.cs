@@ -23,6 +23,25 @@ namespace THConfigUpdater.Client
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.Text = $"TuiHub 配置更新程序 - {GlobalConfig.ServerBaseUrl}";
+            ShowFileBasedPage();
+        }
+
+        private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settingsForm = new SettingsForm();
+            settingsForm.ShowDialog(this);
+            this.Text = $"TuiHub 配置更新程序 - {GlobalConfig.ServerBaseUrl}";
+            ShowFileBasedPage();
+        }
+
+        private void 基于文件的配置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowFileBasedPage();
+        }
+
+        private void ShowFileBasedPage()
+        {
             var fileBasedConfigService = new FileBasedConfigService(GlobalConfig.ServerBaseUrl);
             var fileBasedPage = new FileBasedPage(fileBasedConfigService);
             mainPanel.Controls.Clear();
@@ -30,12 +49,6 @@ namespace THConfigUpdater.Client
             fileBasedPage.Dock = DockStyle.Fill;
             mainPanel.Controls.Add(fileBasedPage);
             fileBasedPage.Show();
-        }
-
-        private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var settingsForm = new SettingsForm();
-            settingsForm.ShowDialog(this);
         }
     }
 }

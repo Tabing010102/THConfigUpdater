@@ -65,8 +65,9 @@
             // 基于文件的配置ToolStripMenuItem
             // 
             this.基于文件的配置ToolStripMenuItem.Name = "基于文件的配置ToolStripMenuItem";
-            this.基于文件的配置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.基于文件的配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.基于文件的配置ToolStripMenuItem.Text = "基于文件的配置";
+            this.基于文件的配置ToolStripMenuItem.Click += new System.EventHandler(this.基于文件的配置ToolStripMenuItem_Click);
             // 
             // mainPanel
             // 
@@ -85,7 +86,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "THConfigUpdater";
+            this.Text = "TuiHub 配置更新程序";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

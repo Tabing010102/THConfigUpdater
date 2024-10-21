@@ -18,7 +18,7 @@ namespace THConfigUpdater.Client.Pages
         private FileBasedConfigService _fileBasedConfigService;
 
         private bool _isRefreshing = false;
-        private List<FileBasedConfig> _fileBasedConfigs;
+        private List<FileBasedConfig> _fileBasedConfigs = new List<FileBasedConfig>();
 
         public FileBasedPage(FileBasedConfigService fileBasedConfigService)
         {
@@ -35,7 +35,7 @@ namespace THConfigUpdater.Client.Pages
                 {
                     configsListView.Items.Clear();
                     var rItem = new ListViewItem(string.Empty);
-                    rItem.SubItems.Add("正在刷新...");
+                    rItem.SubItems.Add("正在更新...");
                     configsListView.Items.Add(rItem);
                     _fileBasedConfigs.Clear();
                     _fileBasedConfigs = await _fileBasedConfigService.GetFileBasedConfigsAsync();
@@ -52,6 +52,7 @@ namespace THConfigUpdater.Client.Pages
                 }
                 catch (Exception ex)
                 {
+                    configsListView.Items[0].SubItems[1].Text = "更新失败";
                     MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
@@ -68,7 +69,7 @@ namespace THConfigUpdater.Client.Pages
 
         private void configsListView_DoubleClick(object sender, EventArgs e)
         {
-            if (configsListView.SelectedItems.Count == 1)
+            if (configsListView.SelectedItems.Count == 1 && configsListView.SelectedItems[0].Text != string.Empty)
             {
                 ConfigFilesForm configFilesForm = new ConfigFilesForm(_fileBasedConfigService)
                 {
@@ -85,7 +86,7 @@ namespace THConfigUpdater.Client.Pages
 
         private void tsUpdateConfigBtn_Click(object sender, EventArgs e)
         {
-            if (configsListView.SelectedItems.Count == 1)
+            if (configsListView.SelectedItems.Count == 1 && configsListView.SelectedItems[0].Text != string.Empty)
             {
                 ConfigFilesForm configFilesForm = new ConfigFilesForm(_fileBasedConfigService)
                 {

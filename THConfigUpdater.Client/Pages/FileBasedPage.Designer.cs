@@ -75,6 +75,7 @@
             this.chName,
             this.chDescp});
             this.configsListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.configsListView.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.configsListView.FullRowSelect = true;
             this.configsListView.HideSelection = false;
             this.configsListView.Location = new System.Drawing.Point(0, 25);
@@ -93,12 +94,12 @@
             // chName
             // 
             this.chName.Text = "名称";
-            this.chName.Width = 180;
+            this.chName.Width = 210;
             // 
             // chDescp
             // 
             this.chDescp.Text = "描述";
-            this.chDescp.Width = 360;
+            this.chDescp.Width = 480;
             // 
             // FileBasedPage
             // 

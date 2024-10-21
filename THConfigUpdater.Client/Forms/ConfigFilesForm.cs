@@ -36,6 +36,7 @@ namespace THConfigUpdater.Client.Forms
             {
                 try
                 {
+                    this.Text += $" - {FileBasedConfig.Name}";
                     _configFiles = await _fileBasedConfigService.GetConfigFilesAsync(FileBasedConfig.Id);
                     configFilesListView.Items.Clear();
                     configFilesListView.BeginUpdate();
@@ -114,7 +115,7 @@ namespace THConfigUpdater.Client.Forms
             {
                 try
                 {
-                    operationBtn.Text = "更新中";
+                    operationBtn.Text = "更新中...";
                     operationBtn.Enabled = false;
                     CustomOperationsHelper customOperationsHelper = new CustomOperationsHelper(FileBasedConfig.CustomOperations);
                     // before
@@ -140,6 +141,8 @@ namespace THConfigUpdater.Client.Forms
                     }
                     // after
                     customOperationsHelper.PerformAfterOperations();
+                    operationBtn.Text = "更新成功";
+                    cancelBtn.Text = "关闭";
                     MessageBox.Show("更新成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
