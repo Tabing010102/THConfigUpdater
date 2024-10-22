@@ -69,7 +69,7 @@ namespace THConfigUpdater.Client.Forms
                             using (var stream = File.OpenRead(clientPath))
                             {
                                 var hash = sha256.ComputeHash(stream);
-                                var hashString = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
+                                var hashString = BitConverter.ToString(hash).Replace("-", string.Empty);
                                 if (hashString.ToUpper() != sha256Server.ToUpper())
                                 {
                                     item.Text = "不匹配";
@@ -123,6 +123,10 @@ namespace THConfigUpdater.Client.Forms
                     // update files
                     foreach (ListViewItem item in configFilesListView.Items)
                     {
+                        if (item.Text == "无需更新")
+                        {
+                            continue;
+                        }
                         var configFileId = int.Parse(item.SubItems[1].Text);
                         var clientPath = item.SubItems[2].Text;
                         var serverStream = await _fileBasedConfigService.GetConfigFileContentAsync(configFileId);
@@ -130,8 +134,11 @@ namespace THConfigUpdater.Client.Forms
                         var directory = Path.GetDirectoryName(clientPath);
                         if (!Directory.Exists(directory))
                         {
+                            item.Text = "创建目录...";
+                            item.BackColor = Color.LightSkyBlue;
                             Directory.CreateDirectory(directory);
                         }
+                        item.Text = "下载中...";
                         using (var fileStream = File.OpenWrite(clientPath))
                         {
                             await serverStream.CopyToAsync(fileStream);

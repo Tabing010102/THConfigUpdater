@@ -21,34 +21,28 @@ namespace THConfigUpdater.Client.Helpers
             });
         }
 
-        public bool PerformBeforeOperations()
+        public void PerformBeforeOperations()
         {
-            return PerformOperations(_ops.Before);
+            PerformOperations(_ops.Before);
         }
 
-        public bool PerformAfterOperations()
+        public void PerformAfterOperations()
         {
-            return PerformOperations(_ops.After);
+            PerformOperations(_ops.After);
         }
 
-        private bool PerformOperations(CustomOperationsEntry entries)
+        private void PerformOperations(CustomOperationsEntry entries)
         {
             if (entries == null)
             {
-                return true;
+                return;
             }
 
-            if (!PerformChecks(entries.Checks))
-            {
-                return false;
-            }
-
+            PerformChecks(entries.Checks);
             PerformCommands(entries.Commands);
-
-            return true;
         }
 
-        private bool PerformChecks(List<CheckOperation> checks)
+        private void PerformChecks(List<CheckOperation> checks)
         {
             foreach (var check in checks)
             {
@@ -58,14 +52,14 @@ namespace THConfigUpdater.Client.Helpers
                     {
                         if (!ServiceExists(check.Entity))
                         {
-                            return false;
+                            throw new Exception("Service does not exist: " + check.Entity);
                         }
                     }
                     else if (check.Condition == "not_exists")
                     {
                         if (ServiceExists(check.Entity))
                         {
-                            return false;
+                            throw new Exception("Service exists: " + check.Entity);
                         }
                     }
                     else
@@ -74,7 +68,6 @@ namespace THConfigUpdater.Client.Helpers
                     }
                 }
             }
-            return true;
         }
 
         private void PerformCommands(List<CommandOperation> commands)
