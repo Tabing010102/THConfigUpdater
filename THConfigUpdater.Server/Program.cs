@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using THConfigUpdater.Server.Configs;
@@ -15,6 +17,15 @@ namespace THConfigUpdater.Server
 
             // Read config
             builder.Services.AddSingleton(builder.Configuration.GetSection("FSConfig").Get<FSConfig>() ?? throw new InvalidOperationException("FSConfig not found."));
+
+            // Add authentication
+            builder.Services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("BasicAuthentication", new AuthorizationPolicyBuilder("BasicAuthentication").RequireAuthenticatedUser().Build());
+            });
 
             // Add services to the container.
             builder.Services.AddRazorPages();
@@ -50,9 +61,10 @@ namespace THConfigUpdater.Server
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapRazorPages();
+            app.MapRazorPages().RequireAuthorization("BasicAuthentication");
 
             app.MapControllers();
 

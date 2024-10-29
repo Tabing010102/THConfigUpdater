@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using THConfigUpdater.Server.Models;
 
 namespace THConfigUpdater.Server.Controllers
 {
+    [Authorize(Policy = "BasicAuthentication")]
     [Route("api/[controller]")]
     [ApiController]
     public class ConfigFilesController : ControllerBase
@@ -25,6 +27,7 @@ namespace THConfigUpdater.Server.Controllers
         }
 
         // GET: api/ConfigFiles
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ConfigFile>>> GetConfigFiles()
         {
@@ -32,6 +35,7 @@ namespace THConfigUpdater.Server.Controllers
         }
 
         // GET: api/ConfigFiles/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<ConfigFile>> GetConfigFile(int id)
         {
@@ -45,6 +49,7 @@ namespace THConfigUpdater.Server.Controllers
             return configFile;
         }
 
+        [AllowAnonymous]
         [HttpGet("getFile/{id}")]
         public async Task<IActionResult> GetConfigFileContent(int id)
         {
