@@ -132,7 +132,7 @@ namespace THConfigUpdater.Client.Forms
                         var serverStream = await _fileBasedConfigService.GetConfigFileContentAsync(configFileId);
                         // ensure directory exists
                         var directory = Path.GetDirectoryName(clientPath);
-                        if (!Directory.Exists(directory))
+                        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                         {
                             item.Text = "创建目录...";
                             item.BackColor = Color.LightSkyBlue;
